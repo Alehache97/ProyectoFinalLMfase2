@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="section-title">Información del Jugador</h1>
+<form method="POST" class="form">
+    <label for="player_tag" class="form-label">Tag del Jugador (sin #):</label>
+    <input type="text" id="player_tag" name="player_tag" required class="form-input">
+    <button type="submit" class="form-button">Buscar</button>
+</form>
+
+{% if player_data %}
+    <h2 class="sub-title">Detalles del Jugador</h2>
+    <div class="player-info-container">
+        <p><strong>Nombre:</strong> {{ player_data.name }}</p>
+        <p><strong>Nivel:</strong> {{ player_data.expLevel }}</p>
+        <p><strong>Trofeos:</strong> {{ player_data.trophies }}</p>
+        <p><strong>Trofeos máximos alcanzados:</strong> {{ player_data.bestTrophies }}</p>
+        <p><strong>Victorias/derrotas:</strong> {{ player_data.wins }} / {{ player_data.losses }}</p>
+        <p><strong>Victorias de tres coronas:</strong> {{ player_data.threeCrownWins }}</p>
+        <p><strong>Cantidad de batallas:</strong> {{ player_data.battleCount }}</p>
+        <p><strong>Total donaciones:</strong> {{ player_data.totalDonations }}</p>
+        <p><strong>Victorias en días de guerra:</strong> {{ player_data.warDayWins }}</p>
+        <p><strong>Cartas coleccionadas en el clan:</strong> {{ player_data.clanCardsCollected }}</p>
+        <p><strong>Clan:</strong> {{ player_data.clan.name if player_data.clan else "Sin clan" }}</p>
+    </div>
+    <h2 class="sub-title">Próximos cofres</h2>
+    <ul class="chests-list">
+    {% for chest in chests_data %}
+        <li class="chest-item">
+            <div class="chest-number">{{ chest[1].index + 1 }}</div>
+            <img src="{{ chest_images.get(chest[1].name, 'https://via.placeholder.com/80') }}" alt="{{ chest[1].name }}" class="chest-image">
+            <div>{{ chest[1].name }}</div>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    {% if request.method == 'POST' %}
+        <p class="error-message">No se encontraron datos para el jugador o hubo un error.</p>
+    {% endif %}
+{% endif %}
+{% endblock %}

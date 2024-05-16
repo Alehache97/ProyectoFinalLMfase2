@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Clash Royale App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('index') }}">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('player_info') }}">Buscar Jugador</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('card_info') }}">Buscar Carta</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('global_rankings') }}">Ranking Global por Temporada</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('regional_rankings') }}">Ranking Global/Regional Actual</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

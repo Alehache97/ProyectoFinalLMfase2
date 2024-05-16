@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="section-title">Ranking Global/Regional Actual</h1>
+<form method="POST" class="form">
+    <label for="region_name" class="form-label">Nombre de la Región:</label>
+    <input type="text" id="region_name" name="region_name" required class="form-input">
+    <label for="result_limit" class="form-label">Límite de resultados (1-1000):</label>
+    <input type="number" id="result_limit" name="result_limit" min="1" max="1000" required class="form-input">
+    <button type="submit" class="form-button">Buscar</button>
+</form>
+
+{% if rankings %}
+    <h2 class="sub-title">Resultados del Ranking</h2>
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Nombre</th>
+                    <th>Tag</th>
+                    <th>Nivel</th>
+                    <th>Puntuación</th>
+                    <th>Clan</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for player in rankings %}
+                <tr>
+                    <td>{{ player.rank }}</td>
+                    <td>{{ player.name }}</td>
+                    <td>{{ player.tag }}</td>
+                    <td>{{ player.expLevel }}</td>
+                    <td>{{ player.eloRating }}</td>
+                    <td>{{ player.clan.name if player.clan else "Sin clan" }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    {% if request.method == 'POST' %}
+        <p class="error-message">No se encontraron datos para el ranking regional indicado o hubo un error.</p>
+    {% endif %}
+{% endif %}
+{% endblock %}
