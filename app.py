@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request
 import os
 import requests
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 
-load_dotenv()
+#load_dotenv()
 
 app = Flask(__name__)
 api_token = os.getenv('CR')
