@@ -53,7 +53,7 @@ def player_info():
             print(f"Error fetching player data: {response_player.status_code} - {response_player.text}")
         
         if response_chests.status_code == 200:
-            chests_data = list(enumerate(response_chests.json()['items']))
+            chests_data = response_chests.json()['items']
         else:
             print(f"Error fetching chests data: {response_chests.status_code} - {response_chests.text}")
     
@@ -125,4 +125,5 @@ def regional_rankings():
     return render_template('regional_rankings.html', rankings=rankings)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
