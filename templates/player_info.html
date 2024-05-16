@@ -26,9 +26,9 @@
     <ul class="chests-list">
     {% for chest in chests_data %}
         <li class="chest-item">
-            <div class="chest-number">{{ chest[1].index + 1 }}</div>
-            <img src="{{ chest_images.get(chest[1].name, 'https://via.placeholder.com/80') }}" alt="{{ chest[1].name }}" class="chest-image">
-            <div>{{ chest[1].name }}</div>
+            <div class="chest-number">{{ chest.index }}</div>
+            <img src="{{ chest_images.get(chest.name, 'https://via.placeholder.com/80') }}" alt="{{ chest.name }}" class="chest-image">
+            <div>{{ chest.name }}</div>
         </li>
     {% endfor %}
     </ul>

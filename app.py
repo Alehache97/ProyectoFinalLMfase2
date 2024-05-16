@@ -39,7 +39,7 @@ def index():
 @app.route('/player_info', methods=['GET', 'POST'])
 def player_info():
     player_data = None
-    chests_data = None
+    chests_data = []
     if request.method == 'POST':
         player_tag_input = request.form['player_tag']
         player_tag = f'%23{player_tag_input}'
