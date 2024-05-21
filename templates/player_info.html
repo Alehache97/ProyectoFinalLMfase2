@@ -6,7 +6,6 @@
     <input type="text" id="player_tag" name="player_tag" required class="form-input">
     <button type="submit" class="form-button">Buscar</button>
 </form>
-
 {% if player_data %}
     <h2 class="sub-title">Detalles del Jugador</h2>
     <div class="player-info-container">
@@ -24,17 +23,27 @@
     </div>
     <h2 class="sub-title">Próximos cofres</h2>
     <ul class="chests-list">
-    {% for chest in chests_data %}
-        <li class="chest-item">
-            <div class="chest-number">{{ chest.index }}</div>
-            <img src="{{ chest_images.get(chest.name, 'https://via.placeholder.com/80') }}" alt="{{ chest.name }}" class="chest-image">
-            <div>{{ chest.name }}</div>
-        </li>
-    {% endfor %}
+        {% for chest in chests_data[:10] %}
+            <li class="chest-item">
+                <div class="chest-number">{{ chest.index + 1 }}</div>
+                <img src="{{ chest_images.get(chest.name, 'https://via.placeholder.com/80') }}" alt="{{ chest.name }}" class="chest-image">
+                <div>{{ chest.name }}</div>
+            </li>
+        {% endfor %}
+    </ul>
+    <h2 class="sub-title">¿Cuándo tocarán los cofres buenos?</h2>
+    <ul class="chests-list">
+        {% for chest in chests_data[10:] %}
+            <li class="chest-item">
+                <div class="chest-number">{{ chest.index + 1 }}</div>
+                <img src="{{ chest_images.get(chest.name, 'https://via.placeholder.com/80') }}" alt="{{ chest.name }}" class="chest-image">
+                <div>{{ chest.name }}</div>
+            </li>
+        {% endfor %}
     </ul>
 {% else %}
     {% if request.method == 'POST' %}
-        <p class="error-message">No se encontraron datos para el jugador o hubo un error.</p>
+        <p class="error-message">No se encontraron datos para el jugador.</p>
     {% endif %}
 {% endif %}
 {% endblock %}

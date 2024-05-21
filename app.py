@@ -1,9 +1,6 @@
 from flask import Flask, render_template, request
 import os
 import requests
-#from dotenv import load_dotenv
-
-#load_dotenv()
 
 app = Flask(__name__)
 api_token = os.getenv('CR')
@@ -59,20 +56,26 @@ def player_info():
     
     return render_template('player_info.html', player_data=player_data, chests_data=chests_data, chest_images=chest_images)
 
-@app.route('/card_info', methods=['GET', 'POST'])
+@app.route('/card_info', methods=['GET'])
 def card_info():
     cards_data = []
-    if request.method == 'POST':
-        search_term = request.form['card_name'].strip().lower()
-        response = requests.get(f'{base_url}/cards', headers=headers)
-        
-        if response.status_code == 200:
-            all_cards = response.json()['items']
-            cards_data = [card for card in all_cards if card['name'].strip().lower().startswith(search_term)]
-        else:
-            print(f"Error fetching cards data: {response.status_code} - {response.text}")
+    response = requests.get(f'{base_url}/cards', headers=headers)
+    
+    if response.status_code == 200:
+        cards_data = response.json()['items']
+    else:
+        print(f"Error fetching cards data: {response.status_code} - {response.text}")
     
     return render_template('card_info.html', cards_data=cards_data)
+
+@app.route('/card_detail/<int:card_id>')
+def card_detail(card_id):
+    card_data = None
+    response = requests.get(f'{base_url}/cards', headers=headers)
+    if response.status_code == 200:
+        all_cards = response.json()['items']
+        card_data = next((card for card in all_cards if card['id'] == card_id), None)
+    return render_template('card_detail.html', card_data=card_data)
 
 @app.route('/global_rankings', methods=['GET', 'POST'])
 def global_rankings():
@@ -112,7 +115,6 @@ def regional_rankings():
                     if location['name'].capitalize() == region_name:
                         location_id = location['id']
                         is_country = location['isCountry']
-                        break
         
         if location_id and (is_country is not False or location_id == 'global'):
             url_ranking = f"{base_url}/locations/{location_id}/pathoflegend/players?limit={result_limit}"

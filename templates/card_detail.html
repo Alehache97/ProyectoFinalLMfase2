@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="section-title">Detalles de la Carta</h1>
+{% if card_data %}
+    <div class="card-detail">
+        <h2><strong>Nombre: </strong>{{ card_data.name }}</h2>
+        <img src="{{ card_data.iconUrls.medium }}" alt="{{ card_data.name }}">
+        <p><strong>Coste Elixir:</strong> {{ card_data.elixirCost }}</p>
+        <p><strong>Rareza:</strong> {{ card_data.rarity }}</p>
+    </div>
+{% else %}
+    <p class="error-message">No se encontraron detalles para esta carta.</p>
+{% endif %}
+{% endblock %}

@@ -8,7 +8,6 @@
     <input type="number" id="result_limit" name="result_limit" min="1" max="1000" required class="form-input">
     <button type="submit" class="form-button">Buscar</button>
 </form>
-
 {% if rankings %}
     <h2 class="sub-title">Resultados del Ranking</h2>
     <div class="table-container">
@@ -24,22 +23,22 @@
                 </tr>
             </thead>
             <tbody>
-            {% for player in rankings %}
-                <tr>
-                    <td>{{ player.rank }}</td>
-                    <td>{{ player.name }}</td>
-                    <td>{{ player.tag }}</td>
-                    <td>{{ player.expLevel }}</td>
-                    <td>{{ player.eloRating }}</td>
-                    <td>{{ player.clan.name if player.clan else "Sin clan" }}</td>
-                </tr>
-            {% endfor %}
+                {% for player in rankings %}
+                    <tr>
+                        <td>{{ player.rank }}</td>
+                        <td>{{ player.name }}</td>
+                        <td>{{ player.tag }}</td>
+                        <td>{{ player.expLevel }}</td>
+                        <td>{{ player.eloRating }}</td>
+                        <td>{{ player.clan.name if player.clan else "Sin clan" }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
 {% else %}
     {% if request.method == 'POST' %}
-        <p class="error-message">No se encontraron datos para el ranking regional indicado o hubo un error.</p>
+        <p class="error-message">No se encontraron datos para el ranking global/regional actual indicado.</p>
     {% endif %}
 {% endif %}
 {% endblock %}

@@ -36,7 +36,7 @@ a {
 }
 
 .nav-item {
-    margin: 0 20px;
+    margin: 0 10px;
 }
 
 .nav-link {
@@ -44,6 +44,8 @@ a {
     text-transform: uppercase;
     font-weight: bold;
     transition: color 0.3s;
+    display: block;
+    padding: 5px 10px;
 }
 
 .nav-link:hover {
@@ -251,6 +253,19 @@ a {
 
 /* Media Queries */
 @media (max-width: 768px) {
+    .navbar {
+        padding: 10px 0;
+    }
+
+    .nav-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-item {
+        margin: 10px 0;
+    }
+
     .main-title {
         font-size: 2.5em;
     }
@@ -278,6 +293,19 @@ a {
 }
 
 @media (max-width: 480px) {
+    .navbar {
+        padding: 5px 0;
+    }
+
+    .nav-list {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .nav-item {
+        margin: 5px 0;
+    }
+
     .main-title {
         font-size: 2em;
     }
