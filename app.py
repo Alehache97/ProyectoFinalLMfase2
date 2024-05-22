@@ -97,34 +97,28 @@ def global_rankings():
 @app.route('/regional_rankings', methods=['GET', 'POST'])
 def regional_rankings():
     rankings = []
+    regions = []
+    
+    # Obtener la lista de regiones
+    url_locations = f"{base_url}/locations"
+    response_locations = requests.get(url_locations, headers=headers)
+    if response_locations.status_code == 200:
+        regions = response_locations.json().get('items', [])
+    else:
+        print(f"Error fetching locations: {response_locations.status_code} - {response_locations.text}")
+    
     if request.method == 'POST':
-        region_name = request.form['region_name'].capitalize()
+        region_id = request.form['region_id']
         result_limit = int(request.form['result_limit'])
         
-        location_id = None
-        is_country = None
-        
-        if region_name == "Global":
-            location_id = 'global'
+        url_ranking = f"{base_url}/locations/{region_id}/pathoflegend/players?limit={result_limit}"
+        response_ranking = requests.get(url_ranking, headers=headers)
+        if response_ranking.status_code == 200:
+            rankings = response_ranking.json().get('items', [])
         else:
-            url_locations = f"{base_url}/locations"
-            response_locations = requests.get(url_locations, headers=headers)
-            if response_locations.status_code == 200:
-                locations = response_locations.json().get('items', [])
-                for location in locations:
-                    if location['name'].capitalize() == region_name:
-                        location_id = location['id']
-                        is_country = location['isCountry']
-        
-        if location_id and (is_country is not False or location_id == 'global'):
-            url_ranking = f"{base_url}/locations/{location_id}/pathoflegend/players?limit={result_limit}"
-            response_ranking = requests.get(url_ranking, headers=headers)
-            if response_ranking.status_code == 200:
-                rankings = response_ranking.json().get('items', [])
-            else:
-                print(f"Error fetching regional rankings: {response_ranking.status_code} - {response_ranking.text}")
+            print(f"Error fetching regional rankings: {response_ranking.status_code} - {response_ranking.text}")
     
-    return render_template('regional_rankings.html', rankings=rankings)
+    return render_template('regional_rankings.html', rankings=rankings, regions=regions)
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

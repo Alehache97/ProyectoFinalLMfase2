@@ -2,8 +2,12 @@
 {% block content %}
 <h1 class="section-title">Ranking Global/Regional Actual</h1>
 <form method="POST" class="form">
-    <label for="region_name" class="form-label">Nombre de la Región:</label>
-    <input type="text" id="region_name" name="region_name" required class="form-input">
+    <label for="region_id" class="form-label">Nombre de la Región:</label>
+    <select id="region_id" name="region_id" required class="form-input">
+        {% for region in regions %}
+            <option value="{{ region.id }}">{{ region.name }}</option>
+        {% endfor %}
+    </select>
     <label for="result_limit" class="form-label">Límite de resultados (1-1000):</label>
     <input type="number" id="result_limit" name="result_limit" min="1" max="1000" required class="form-input">
     <button type="submit" class="form-button">Buscar</button>
